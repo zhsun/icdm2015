@@ -1,0 +1,67 @@
+\section{Related Work}
+\label{sec:related}
+
+Among the prevalence in online advertisements system, e-commerce
+platform and social networks, there has been an increasing interest in
+developing recommendation systems \cite{resnick1997recommender,
+  ricci2011recommender} that can automatically predict the
+"preference", "rating", "performance" or "interest" of a item for a
+end user or a client based the history data, such as the task we
+introduces in Section \ref{sec:intro}. One popular technique that has
+been used in many recommendation systems is called collaborative
+filtering, which is based on the intuition that if two users(or
+clients) have a similar opinion on an item(or issue), they are more
+likely to have similar opinions on other items(or
+issues)\cite{resnick1997recommender, sarwar2001item,
+  koren2011advances, ricci2011recommender}. Generally, collaborative
+filtering is an approach that make use of the preference information
+from many users to give prediction of the interest of one user. There
+are many forms of collaborative filtering systems. For examples,
+Linden et al. uses the item-to-item collaborative filtering to offer
+personalized recommendations for each customer in the online
+store\cite{linden2003amazon}; Cai et al. captures the interaction
+between users within a social network and formulates a collaborative
+filtering approach to allow high quality people to people
+recommendations in social networks \cite{cai2011collaborative}; Hu et
+al. implements a large scale TV recommender system with a
+collaborative filtering based on prior implicit feedback that can
+recommend new TV programs to their users with high accuracy
+\cite{hu:2008}.
+
+As a special type of collaborative filtering, various forms of matrix
+factorization based recommendation system were used by researchers for
+different recommendation tasks \cite{ZitnikZ12, lin2007projected,
+  lee2001algorithms, brunet2004metagenes, parambath2013matrix,
+  ricci2011recommender}. For instance, to help Flickr users more
+easily engage in group activities, Zhang et al. proposes a tensor
+decomposition-based Flickr group recommendation model, which is based
+on CANDECOMP/PARAFAC tensor decomposition method to capture the
+underlying patterns in the user-tag-group
+relations\cite{zheng2010flickr}. Gu et al. introcudes a graph
+regularized nonnegative matrix factorization model for general
+collaborative filtering tasks, which outperform many state of the art
+collaborative filtering methods on benchmark data
+sets\cite{gu2010collaborative}. Other work by Baltrunas et
+al. presents an context-aware matrix factorization (CAMF) method which
+extends the classical Matrix Factorization approach by taking
+contextual information into consideration
+\cite{baltrunas2011matrix}. By applying their method on MovieAT data
+set and Yahoo Webscope movie data to do movie rating prediction,
+Baltrunas et al . have shown that the CAMF method can substantially
+improve the rating prediction accuracy comparing to the the classical
+Matrix Factorization approaches in certain circumstances in which the
+relevant context information is available.
+
+Despite there being a lot of researches of matrix factorization based
+collaborative filtering methods, many algorithms still have salient
+weaknesses under sparsity conditions
+\cite{cacheda2011comparison}. Even though there are approaches like
+multi-Domain collaborative filtering by Zhang et al. and adapting
+neighborhood and matrix factorization model by Liu et al. trying to
+improve the model's performance by integrating other available context
+information\cite{zhang2012multi, liu2010adapting}, an extreme sparse
+data set would easily make most of the matrix factorization based
+models over-fitting. The SPPAN model in this present paper, however,
+adjust the complexity of the model automatically according to the
+sparsity of the data set, which makes it more accustomed to extreme
+sparse data set.

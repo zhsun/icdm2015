@@ -1,0 +1,132 @@
+\section{Introduction}
+\label{sec:intro}
+
+Personalized recommendation is widely applied to various online
+systems, including online advertising, e-commerce platforms, social
+networks, etc. Online advertising plays an important role in majority
+of e-commerce sites. It is a multi-billion dollar business, and brings
+tremendous revenue to companies like Google and Facebook. Take Google
+as an example, its online adversiting system generates a large portion
+of Google's revenue, supports hundreds of millions of publishers on
+the Internet eco-system, and can reach more than 80\% of all Internet
+users worldwide in more than 30 languages and over 100 countries.
+
+%All this makes it one of advertisers' favorite online advertising products.
+
+To make the best out of the online advertising system, it requires the
+advertiser to provide a good candidate keywords list, to match
+advertisements with web contents more precisely, hence increase the
+click through rate, and increase the product revenue by
+advertisements. As most advertisers may be lack of experience to
+provide good keywords for their advertisements, especially when they
+start running advertisement for the first time, historical
+advertisement traffic data is used by recommendation system to offer
+advertisers personalized keyword suggestions. The suggested keywords
+need to be relevant to the products they are promoting, as well as
+bring a lot of traffic (e.g. user views, clicks, etc.) to the
+advertisement.
+
+The process of keyword recommendation using historical data is usually
+composed of two steps: first, a candidate list of semantic relevant
+keywords for each advertisement is generated. For instance, if the
+advertisement is about a new digital camera, ``electronics'' and
+``photography'' would be semantically relevant keywords. Secondly,
+based on candidate keyword list, a further keyword refinement and
+selection is executed to generate the final keyword lists.
+
+There are mainly two types of methods in the second step.  The most
+popular one is A/B testing~\cite{abtest:wiki}, which split the traffic
+into two parts: one big part still feeds into the original keywords
+and the other small part feeds into the newly suggested keywords, and
+compare the difference of these two parts, to decide how much more
+traffic can be brought by adding the new keywords, hence update the
+new lists with the most beneficial keywords. A/B testing usually takes
+reasonably long period of time (e.g. several weeks) to decide which
+keyword should be suggested. During that long turnover time, lots of
+business opportunities may be lost. Moreover, A/B testing only uses a
+small portion of the real traffic information, the data may be biased
+and not error-prone, hence generate inaccurate estimation.
+
+Another alternative solution for step two, is to use model based
+methods, e.g. Collaborative Filtering~\cite{resnick1997recommender,
+  sarwar2001item}, which makes automatic predictions (filtering) about
+the preference of one advertisement by collecting preferences from
+many others (collaborating). In practice, the recommendation system
+are based on large datasets, as a result, user based or item based
+matrix used for collaborative filtering could be extremely large and
+sparse, which challenges the model performance. Matrix factorization
+models \cite{??} which can better handle the data sparsity compared
+with item and user based method.  However, we have noticed that due to
+the nature of extremely sparse data set in advertisement, the matrix
+factorization based models tend to over-fit in the training data set
+even with very strong regularization. As a result, the performance of
+matrix factorization based estimation models is not suitable for the
+test data set.
+
+We consider a machine learning-based approach to building an effective
+recommendation system. Such an approach should process the large scale
+data in a scalable manner to make good recommendations, and provide an
+cost-effective list of most valuable keywords to end users. It should
+provide the recommendation and keyword selections in a time sensitive
+manner, with a very fast turn around time, without losing any business
+opportunity.  It should support very sparse data, with more accurate
+predictions. It should handle both training and testing data set
+properly to avoid the over-fitting.
+ 
+We proposed a novel approach that addresses the above
+requirements. The motivation for our model comes from the similar idea
+as collaborative filtering, that similarity ratio of different items
+between similar users should be close to each other. It gains insights
+from both item-based similarity and user-based similarity. Instead of
+using only item-based or user-based method, it is a synthetic
+multi-dimension model, which evaluates the similarity cross item and
+user dimensions. Also, different from item-based or user-based method,
+which uses a predefine static similarity function and calculate the
+global optimal similarity, we are using a local optimal function,
+which can dynamic involving similarity using learned parameters, hence
+can support large scale data in an efficient computation cost.  We
+have developed an innovative non-parametric model: Similarity powered
+Pairwise Amplifier Network (SPAN) model. It uses observed performance
+ratios between keyword pairs to give prediction for the unknown
+entries. Comparing to matrix factorization based methods like
+LSNMF[complete name + referecen??] and NMF[complete name +
+  reference?], experiments on the same Click-through rate data set
+show that the proposed SPPAN model increases the prediction accuracy
+by more than $50\%$.
+
+In summary, our contributions in this paper include:
+\begin{itemize} \itemsep -2pt
+\item We successfully exploit the potential of improving
+  recommendation for sparse and large scale data.
+\item We develop a … model, which can adjust the complexity of the
+  model automatically according to the sparsity of the dataset, which
+  makes it more accorded to extreme sparse data set.
+\item We conduct extensive experiments to verify out approach and
+  compare with existing methods, and demonstrate that SPANN can
+  effectively resolve the data sparsity and scalability. Thus, it can
+  be adopted as a recommendation tool for general propose.
+\end{itemize}
+
+\textcolor{blue}{ 1. use ratio, 2. parameter propostion to the
+  observed data; factorization propotion to user and item main
+  contribution: (1)one set of problem, extreme sparse data (2)model
+  complexity propotion to the observed data (3)app to adsense (4)
+  implementation distribution framework } The remainder of this paper
+is organized as follows. We first formulate the problem in Section
+\ref{sec:problem} Then, we describes the details of SPPAN model,
+including the high-level work-flow of the model, the intuition and
+assumptions behind the proposed SPPAN model, and different components
+in the model. It also established the math expressions and notations
+that are used throughout the rest of the paper in Section
+\ref{sec:model} .After that, we introduce the training algorithms of
+SPPAN model in Section \ref{sec:trainer}, which includes the Feed
+Forward Estimation process and the Error Back Propagation process. In
+Section \ref{sec:exp}, we evaluate the SPPAN model through prediction
+experiments on a Click-through rate data set. Experiment results show
+that the SPPAN model performs much better than matrix factorization
+based NMF and LSNMF methods on predicting unknown values on this super
+sparse data set. Section \ref{sec:related} shows several current
+approaches and researches that try to solve the similar
+problem. Finally, we concluded the whole article in Section
+\ref{sec:conclusion}, where we highlighted the key findings and
+achievements of this paper.
