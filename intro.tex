@@ -1,132 +1,126 @@
 \section{Introduction}
 \label{sec:intro}
 
-Personalized recommendation is widely applied to various online
-systems, including online advertising, e-commerce platforms, social
-networks, etc. Online advertising plays an important role in majority
-of e-commerce sites. It is a multi-billion dollar business, and brings
-tremendous revenue to companies like Google and Facebook. Take Google
-as an example, its online adversiting system generates a large portion
-of Google's revenue, supports hundreds of millions of publishers on
-the Internet eco-system, and can reach more than 80\% of all Internet
-users worldwide in more than 30 languages and over 100 countries.
+Personalized recommendation is a critcal component for most web
+systems, including online advertising, e-commerce websites, social
+network, etc. Let's take online advertising as an example. It's a
+multi-billion dollar business, accounts for majority of the revenue
+for companies like Google and Facebook. It's also the main income
+source for millions web content publishers and most e-commerce
+websites. Therefore, the impact of designing good personalized
+recommendations is huge.
 
-%All this makes it one of advertisers' favorite online advertising products.
+In this paper, we present an innovative machine learning model for
+personalized recommendations that can handle extremely sparse and
+large scale data. Since our team works on the personalized keyword
+recommendation for advertisers in Google Adsense~\cite{adsense:wiki},
+for the rest of this paper, we will use our project as an example. But
+by no means our model is limited to this example. It can be easily
+applied to other personalized recommendation systems.
 
-To make the best out of the online advertising system, it requires the
-advertiser to provide a good candidate keywords list, to match
-advertisements with web contents more precisely, hence increase the
-click through rate, and increase the product revenue by
-advertisements. As most advertisers may be lack of experience to
-provide good keywords for their advertisements, especially when they
-start running advertisement for the first time, historical
-advertisement traffic data is used by recommendation system to offer
-advertisers personalized keyword suggestions. The suggested keywords
-need to be relevant to the products they are promoting, as well as
-bring a lot of traffic (e.g. user views, clicks, etc.) to the
-advertisement.
-
-The process of keyword recommendation using historical data is usually
-composed of two steps: first, a candidate list of semantic relevant
-keywords for each advertisement is generated. For instance, if the
-advertisement is about a new digital camera, ``electronics'' and
-``photography'' would be semantically relevant keywords. Secondly,
-based on candidate keyword list, a further keyword refinement and
-selection is executed to generate the final keyword lists.
-
-There are mainly two types of methods in the second step.  The most
-popular one is A/B testing~\cite{abtest:wiki}, which split the traffic
-into two parts: one big part still feeds into the original keywords
-and the other small part feeds into the newly suggested keywords, and
-compare the difference of these two parts, to decide how much more
-traffic can be brought by adding the new keywords, hence update the
-new lists with the most beneficial keywords. A/B testing usually takes
-reasonably long period of time (e.g. several weeks) to decide which
-keyword should be suggested. During that long turnover time, lots of
-business opportunities may be lost. Moreover, A/B testing only uses a
-small portion of the real traffic information, the data may be biased
-and not error-prone, hence generate inaccurate estimation.
-
-Another alternative solution for step two, is to use model based
-methods, e.g. Collaborative Filtering~\cite{resnick1997recommender,
-  sarwar2001item}, which makes automatic predictions (filtering) about
-the preference of one advertisement by collecting preferences from
-many others (collaborating). In practice, the recommendation system
-are based on large datasets, as a result, user based or item based
-matrix used for collaborative filtering could be extremely large and
-sparse, which challenges the model performance. Matrix factorization
-models \cite{??} which can better handle the data sparsity compared
-with item and user based method.  However, we have noticed that due to
-the nature of extremely sparse data set in advertisement, the matrix
-factorization based models tend to over-fit in the training data set
-even with very strong regularization. As a result, the performance of
-matrix factorization based estimation models is not suitable for the
-test data set.
-
-We consider a machine learning-based approach to building an effective
-recommendation system. Such an approach should process the large scale
-data in a scalable manner to make good recommendations, and provide an
-cost-effective list of most valuable keywords to end users. It should
-provide the recommendation and keyword selections in a time sensitive
-manner, with a very fast turn around time, without losing any business
-opportunity.  It should support very sparse data, with more accurate
-predictions. It should handle both training and testing data set
-properly to avoid the over-fitting.
- 
-We proposed a novel approach that addresses the above
-requirements. The motivation for our model comes from the similar idea
-as collaborative filtering, that similarity ratio of different items
-between similar users should be close to each other. It gains insights
-from both item-based similarity and user-based similarity. Instead of
-using only item-based or user-based method, it is a synthetic
-multi-dimension model, which evaluates the similarity cross item and
-user dimensions. Also, different from item-based or user-based method,
-which uses a predefine static similarity function and calculate the
-global optimal similarity, we are using a local optimal function,
-which can dynamic involving similarity using learned parameters, hence
-can support large scale data in an efficient computation cost.  We
-have developed an innovative non-parametric model: Similarity powered
-Pairwise Amplifier Network (SPAN) model. It uses observed performance
-ratios between keyword pairs to give prediction for the unknown
-entries. Comparing to matrix factorization based methods like
-LSNMF[complete name + referecen??] and NMF[complete name +
-  reference?], experiments on the same Click-through rate data set
-show that the proposed SPPAN model increases the prediction accuracy
-by more than $50\%$.
-
-In summary, our contributions in this paper include:
-\begin{itemize} \itemsep -2pt
-\item We successfully exploit the potential of improving
-  recommendation for sparse and large scale data.
-\item We develop a … model, which can adjust the complexity of the
-  model automatically according to the sparsity of the dataset, which
-  makes it more accorded to extreme sparse data set.
-\item We conduct extensive experiments to verify out approach and
-  compare with existing methods, and demonstrate that SPANN can
-  effectively resolve the data sparsity and scalability. Thus, it can
-  be adopted as a recommendation tool for general propose.
+Google Adsense allows publishers in the network of content sites to
+serve automatic advertisements (for text, image, videos, or
+interactive media), which are targeted to site content and
+audience. It generates billions of dollars each year, supports
+hundreds of millions of publishers on the Internet eco-system, and can
+reach more than 80\% of all Internet users worldwide in more than 30
+languages and over 100 countries. All these make it one of advertiser'
+favorite online advertising systems. In a nutshell, how it works can
+be illustrated by Figure~\ref{fig:adsense}.
+\begin{itemize} \itemsep -1pt
+\item {\em Publisher} posts content on the Internet, and insert a code
+  snippet into its web pages.
+\item {\em User} visits the web page, which triggers the code snippet
+  to pull relevant advertisements from Google Adsense servers, and
+  show them on the same web page.
+\item If user click on the advertisement, the {\em advertiser} who
+  created it will pay Google certain amount of money, and Google will
+  share majority of that payment with the content publisher.
 \end{itemize}
 
-\textcolor{blue}{ 1. use ratio, 2. parameter propostion to the
-  observed data; factorization propotion to user and item main
-  contribution: (1)one set of problem, extreme sparse data (2)model
-  complexity propotion to the observed data (3)app to adsense (4)
-  implementation distribution framework } The remainder of this paper
-is organized as follows. We first formulate the problem in Section
-\ref{sec:problem} Then, we describes the details of SPPAN model,
-including the high-level work-flow of the model, the intuition and
-assumptions behind the proposed SPPAN model, and different components
-in the model. It also established the math expressions and notations
-that are used throughout the rest of the paper in Section
-\ref{sec:model} .After that, we introduce the training algorithms of
-SPPAN model in Section \ref{sec:trainer}, which includes the Feed
-Forward Estimation process and the Error Back Propagation process. In
-Section \ref{sec:exp}, we evaluate the SPPAN model through prediction
-experiments on a Click-through rate data set. Experiment results show
-that the SPPAN model performs much better than matrix factorization
-based NMF and LSNMF methods on predicting unknown values on this super
-sparse data set. Section \ref{sec:related} shows several current
-approaches and researches that try to solve the similar
-problem. Finally, we concluded the whole article in Section
-\ref{sec:conclusion}, where we highlighted the key findings and
-achievements of this paper.
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.4\textwidth]{figures/adsense.jpg}
+  \caption{Google Adsense system work flow.}
+  \label{fig:adsense}
+\end{figure}
+
+To make the best out of Adsense, it requires the advertisers to
+provide a good list of keywords, to match advertisements with web
+contents more precisely, hence increase the click through rate and
+better advertisement performance. However, the reality is most
+advertisers are lack of experience to provide good keywords for their
+advertisements. Therefore, intelligently making use of historical data
+to provide good personalized keyword recommendations to advertisers is
+crutial to the success of Adsense. There are mainly two types of
+approaches.
+\begin{itemize}
+\item A/B-testing~\cite{abtest:wiki}. In this approach, we split the
+  web traffice into two parts: majority of the traffic uses the
+  original keyword list to match advertisement, and the other small
+  fraction of the trafic uses the new keyword list (original keyword
+  list along with some semantically relevant keywords). Do this
+  experiment for some period of time (usually in days or weeks) and
+  compare the stats. If the new list performs significantly better, we
+  then surface this recommendation to the advertiser. The main
+  drawback of this approach is the long turnaround time. Lots of
+  business opportunities may be lost after days or weeks of
+  experiments.
+\item Model based solutions using collaborative
+  filtering~\cite{resnick1997recommender,sarwar2001item}. This
+  approach makes use of machine learning technology and predicts the
+  performance of the new keyword list without running
+  experiments. There are three type of collaborative filtering models
+  that are commonly used, user neighborhood model (considering the
+  similarity between users, in our case will be advertisers), item
+  neighborhood model (considering the similarity between items, in
+  oursecase will be keywords), and matrix factorization based
+  model~\cite{}. The matrix factorization based model has drawn a lot
+  of attention recently due to its success in the Netflix
+  Challenge~\cite{}. It's proven to produce better estimates than user
+  neighborhood or item neighborhood models, and can handle sparse data
+  set like the data in Netflix Challenge. However, the data set we
+  deal with is more than 10 times sparser than the Netflix data. We
+  observe significant overfitting even with very strong
+  regularization.
+\end{itemize}
+
+As a result, we went out and designed a novel new machine learning
+model that is resilient to extremely sparse data set and doesn't need
+to run days of experiments. First, the complexity of the model
+(a.k.a. the number of parameters) grows with respect to observed data,
+not to the number of advertisers and number of keywords like matrix
+factorization based models. This makes our model resilient to
+extremely sparse data. Secondly, our training algorithm is based on
+gradient descent, which is easy to parallelize, and thus can handle
+very large scale data set. Thirdly, our model combines the user
+neighborhood and item neighborhood ideas in collaborative filtering
+smartly, where similarities are ``learned'' from training algorithm
+other than defining a global similarity metric for neighborhood. This
+makes the estimation quality of our model very good.
+
+In summary, our main contributions in this paper include:
+\begin{itemize} \itemsep -1pt
+\item We successfully exploit the potential of improving personalized
+  recommendation for extremely sparse and large scale data.
+\item Novel ideas in model design include: (a) control model
+  complexity with respect to observed data; (b) intelligently combine
+  ideas in collaborative filtering.
+\item We have applied our model successfully to personalized keyword
+  recoomendation system in Google Adsense. And we have conducted
+  extensive comparison experiments with matrix factorization based
+  methods.
+\item We have implimented a distrubted training system that can handle
+  large scale data set and is ready to apply to other personalized
+  recommendation problems.
+\end{itemize}
+
+The remainder of this paper is organized as follows. We first
+formulate the problem in Section~\ref{sec:problem}. Then we describe
+the details of our model, including the high-level workflow, intuition
+and assumptions, as well as different components of the model in
+Section~\ref{sec:model}. After that, we introduce the training
+algorithms in Section~\ref{sec:trainer}. We present experimental
+results in Section~\ref{sec:exp}, and related works in
+Section~\ref{sec:related}. Finally, we conclude this paper in
+Section~\ref{sec:conclusion}.
