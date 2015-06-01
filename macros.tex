@@ -11,3 +11,9 @@
 
 %% Comment out a continuous block.
 \newcommand{\junk}[1]{}
+
+\newcommand{\wconf}[3]{\sum\limits_{{#2}:\beta_{{#1}{#2}}\in\Gamma_{({#1},*)}} \confi{{#2}{#3}}\cdot \psi({#1},{#2},{#3})}
+\newcommand{\sconf}[3]{\sum\limits_{{#2}:\beta_{{#1}{#2}}\in\Gamma_{({#1},*)}} \confi{{#2}{#3}}}
+
+\newcommand{\wtheta}[2]{\sum \limits_{{#2}:(a_{#2},\gain{{#2}}{ij})\in\amp{ij}} \theta_{{#1}{#2}} \cdot \gain{{#2}}{ij}}
+\newcommand{\stheta}[2]{\sum \limits_{{#2}:(a_{#2},\gain{{#2}}{ij})\in\amp{ij}} \theta_{{#1}{#2}}}

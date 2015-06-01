@@ -2,7 +2,8 @@
 \label{sec:trainer}
 
 \begin{figure}[!ht]
-  \centering  \includegraphics[width=0.5\textwidth]{figures/model.pdf}
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/new_model.png}
   \caption{{\sppan} system overview.}
   \label{fig:model}
 \end{figure}
@@ -18,8 +19,9 @@ data points to estimate the value of a target entry.  {\it Error Back
   Propagation} updates current model parameters.  The training process
 is in an incrementally update way, and generate the final model which
 is composed of similarity graph and pairwise amplifier graph. The
-learned {\sppan} model will be directly used to estimate missing values.
-In the following sections, we will discuss each component in details.
+learned {\sppan} model will be directly used to estimate missing
+values.  In the following sections, we will discuss each component in
+details.
 
 \subsection{Feed Forward Estimation}
 \label{sec:ffe}
@@ -30,9 +32,6 @@ In the following sections, we will discuss each component in details.
   \caption{Feed Forward Estimation}
   \label{fig:trainer-feedforward}
 \end{figure}
-
-\textcolor{red}{ADD MORE DESCRIPTION HERE, need to understand what is
-  two layers calculation units? ...}
 
 Given particular values for initial parameters and the inputs data, to
 predict parameter settings that minimize the error, our model uses
@@ -60,12 +59,6 @@ values. The second layer takes all the output estimations from the
 first layer $\{\psi(u,i_1,j),\psi(u,i_2,j),\cdots
 \psi(u,i_\lambda,j)\}$ as inputs to calculate the final prediction
 using equation \ref{eq:feedforward_1}.
-
-\newcommand{\wconf}[3]{\sum\limits_{{#2}:\beta_{{#1}{#2}}\in\Gamma_{({#1},*)}} \confi{{#2}{#3}}\cdot \psi({#1},{#2},{#3})}
-\newcommand{\sconf}[3]{\sum\limits_{{#2}:\beta_{{#1}{#2}}\in\Gamma_{({#1},*)}} \confi{{#2}{#3}}}
-
-\newcommand{\wtheta}[2]{\sum \limits_{{#2}:(a_{#2},\gain{{#2}}{ij})\in\amp{ij}} \theta_{{#1}{#2}} \cdot \gain{{#2}}{ij}}
-\newcommand{\stheta}[2]{\sum \limits_{{#2}:(a_{#2},\gain{{#2}}{ij})\in\amp{ij}} \theta_{{#1}{#2}}}
 
 \begin{equation}
   \label{eq:feedforward_2}

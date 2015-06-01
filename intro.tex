@@ -19,7 +19,7 @@ advertisers, publishers, end users and many others.  It allows
 publishers in the network of content sites to serve automatic
 advertisements (for text, image, videos, or interactive media), which
 are targeted to site content and audience.
-%
+
 Take Google Adsense system ~\cite{adsense:wiki} as an example,
 Figure~\ref{fig:adsense} illustrates how it works in a netshell: {\em
   Publisher} posts content on the Internet, and insert a code snippet
@@ -29,12 +29,11 @@ servers, and show them on the same web page.  If user click on the
 advertisement, the {\em advertiser} who created it will pay Google
 certain amount of money, and Google will share majority of that
 payment with the content publisher.
-%
+
 Google Adsense system generates billions of dollars each year,
 supports hundreds of millions of publishers on the Internet
 eco-system, and can reach more than 80\% of all Internet users
 worldwide in more than 30 languages and over 100 countries.
-%
 
 \begin{figure}[!ht]
   \centering
@@ -43,13 +42,13 @@ worldwide in more than 30 languages and over 100 countries.
   \label{fig:adsense}
 \end{figure}
 
-Delivering the right marketing messages to the right users in the
+Delivering the right marketing messages to the right users at the
 right time is of great importance to the success of online advertising
 system. It requires the advertisers to provide a good list of
 keywords, to match advertisements with web contents precisely, to
 increase the click through rate and get a better advertisement
 performance.
-%
+
 However, the reality is most advertisers are lack of experience to
 provide good keywords for their advertisements. Therefore, how to make
 best use of historical data to provide effective personalized keyword
@@ -82,12 +81,13 @@ attention recently due to its success in the Netflix
 Challenge~\cite{}. It's proven to produce better estimates than user
 neighborhood or item neighborhood models, and can handle sparse data
 set like the data in Netflix Challenge.
-%
+
 However, the data set we deal with is more than 100 times sparser than
 the Netflix data. We observe significant overfitting even with very
 strong regularization.
 
-In this paper, we design a novel machine learning model that is
+In this paper, we design a novel machine learning model (Similarity
+powered Pairwise Amplifier Network, {\sppan} for short), which is
 resilient to extremely sparse data set and doesn't need long
 turnaround time in experiments.  First, the complexity of the model
 (a.k.a. the number of parameters) grows with respect to observed data,

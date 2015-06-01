@@ -29,17 +29,6 @@ represents how similar the corresponding two advertisers are with each
 other. Let $\theta_{uv}$ denote the similarity between advertiser
 $u$ and $v$.
 
-%% \begin{comment}
-%% % this graph does not provide much useful information, but a normal graph structure
-%%  Figure~\ref{fig:sim-graph} shows an example fragment of the Similarity Graph.
-%% \begin{figure}[!ht]
-%%   \centering
-%%   \includegraphics[width=0.35\textwidth]{figures/sim_graph.pdf}
-%%   \caption{Similarity Graph}
-%%   \label{fig:sim-graph}
-%% \end{figure}
-%% \end{comment}
-
 {\bf Pairwise Amplifier Graph} contains all the ratio information
 between different pairs of keywords. It is defined as a directed graph
 $G_{\mbox{amp}}=<V,E>$, where $V$ contains all the keywords , and $E$
@@ -53,14 +42,5 @@ $amp_{ij}=\{(a_u,\gain{u}{ij})~|~u\in [1,N_a],\beta_{ui},\beta_{uj}\in
 $\gain{u}{ij}=\beta_{uj}/\beta_{ui}$, and $(a_0,c_{ij})$ are just the
 bias terms which we will use later in the model.
 
-\begin{comment}
- Figure~\ref{fig:amp-graph} shows an example fragment of the Pairwise
- Amplifier Graph.
-
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width=0.35\textwidth]{figures/amp_graph.pdf}
-  \caption{Pairwise Amplifier Graph}
-  \label{fig:amp-graph}
-\end{figure}
-\end{comment}
+\textcolor{red}{Should we consider move feedforward estimate here, to
+  show how model produces estimates?}

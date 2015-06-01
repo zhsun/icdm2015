@@ -1,45 +1,52 @@
 \section{Experiments}
 \label{sec:exp}
 
-Based on Section \ref{sec:model} and \ref{sec:trainer}, we have
-implemented the proposed {\sppan} model in both Python and C++ that can
-run on a single machine. We also developed an parallel C++ version of
-{\sppan} model based on Map-reduce.
+\textcolor{red}{ please add/revise necessary part}
 
-In this section, we provide evaluation experiments for the performance
-of the {\sppan} model. More specifically, we use the Python version
-{\sppan} model, and compared its performance with a baseline method
-and two Nonnegative Matrix Factorization based methods provided by
-nimfa Python library \cite{ZitnikZ12}:
+In this section, we report our experiments on evaluating
+the effectiveness and robustness of the proposed framework.
+The evaluation is based on adsense data collected
+from Google's adsense system over
+a 1-year period from ....
+
+In our study, we partition the dataset into training and
+testing sets. Using the training
+set, we first build the SPAN models presented in Section \cite{model}.
+Then for each advertisement  in the testing set, we apply the algorithms introduced in Section ?? to predict the recommendation result for..
+
+We implement the proposed {\sppan} model in both Python and C++ that can
+run on a single machine, also a parallel C++ version based on Map-reduce. 
+To evaluate the effectiveness of our system, we use the Python version to compare its performance with a baseline method and two Nonnegative Matrix Factorization based methods provided by nimfa Python library \cite{ZitnikZ12}.  
 
 \begin{itemize} \itemsep -2pt
 \item {\em Baseline}: The baseline method is giving prediction simply
   based on the average value in the training set.
-\item {\em LSNMF}: It is based on Alternating nonnegative least
+\item {\em LSNMF(??? stands for?)}: based on alternating nonnegative least
   squares matrix factorization using projected gradient method for
   subproblems\cite{lin2007projected}.
-\item {\em NMF}: It is based on Standard nonnegative matrix
+\item {\em NMF(???stands for????)}: based on Standard nonnegative matrix
   factorization with Euclidean / Kullback-Leibler update equations and
   Frobenius / divergence / connectivity cost
   functions\cite{lee2001algorithms, brunet2004metagenes}.
 \end{itemize}
 
-To provide more interpretable experiment results and for data privacy
-considerations, we show the performance result of NMF, LSNMF and
-{\sppan} as their relative performance to the baseline method in all
-the following subsections. The results of the evaluation experiments
-show salient advantages of {\sppan} model compare to those two NMF
-based methods:
+%To provide more interpretable experiment results and for data privacy
+%considerations, we show the performance result of NMF, LSNMF and
+%{\sppan} as their relative performance to the baseline method in all
+%the following subsections. The results of the evaluation experiments
+%show salient advantages of {\sppan} model compare to those two NMF
+%based methods:
 
+Our experiments will demonstrate:
 \begin{itemize} \itemsep -2pt
-\item {} The matrix factorization based methods LSNMF and NMF are not
-  handling the present extreme sparse CTR data set very well. Their
+\item {Better Prediction Accuracy} The matrix factorization based methods LSNMF and NMF are not
+  handling the present extreme sparse click-through rate (CTR) data set very well. Their
   prediction accuracy is even worse than the baseline method.
-\item {} In terms of the training and testing error (Root-mean-square
+\item {Lower Error Rate} In terms of the training and testing error (Root-mean-square
   deviation), {\sppan} model performs more than $65\%$ and $40\%$ better
   than the matrix factorization based methods, and around $60\%$ and
   $30\%$ better than the baseline method.
-\item {} {\sppan} model has a normal error distribution centered at 0,
+\item {Balanced Error Distribution} {\sppan} model has a normal error distribution centered at 0,
   which means a balanced estimation; while LSNMF and NMF have biased
   error distributions that are constantly under estimating.
 \end{itemize}
@@ -55,19 +62,20 @@ The CTR data set can be considered as a 2D matrix shown in Figure
 \ref{fig:problem-as-matrix}, where each row represents an advertiser
 and each column represent a target keyword. The value of each matrix
 entry in Figure \ref{fig:problem-as-matrix} is the weekly average
-click-through rate (CTR) that we observed for the corresponding
-advertiser on that specific keyword. The whole dataset is extremely
+CTR that we observed for the corresponding
+advertiser on that specific keyword. 
+
+The whole dataset is extremely
 sparse because there are hundreds of thousands of different keywords
-but advertisers usually only target at several of them. To be more
+but advertisers usually only target a very few of them. To be more
 specific, the dataset contains more than 400k different advertisers
 (number of rows) and 500k keywords (number of columns), but more than
 $99.98\%$ entries in the dataset matrix are missing.
 
 Because the two Nonnegative Matrix Factorization based methods
 provided by nimfa cannot handle the entire CTR dataset ($400k \times
-500k$ sparse matrix) on a single machine, we also generated a
-sub-sampled version of data set in addition to the original one. To
-generate the sub-sampled dataset, we go through each entry in the
+500k$ sparse matrix) on a single machine, we random generate a
+sub-sampled version of data set in addition to the original one by going through each entry in the
 original dataset and only keep that entry with specified
 probability. If all the entry for a row (advertiser) or column
 (keyword) are dropped, we simply remove that row (advertiser) or
@@ -87,18 +95,17 @@ extremely sparse with more than $99.98\%$ of the entries missing.
   Keywords & $\sim 511K$ & $\sim 73K$  \\ 
   Known CTR entries &  $\sim 21M$ & $\sim 2M$ \\ \hline
 \end{tabular}
-\caption{Basic Information}
+\caption{Dataset Description}
 \label{tab:data}
 \end{table}
 
 \subsection{Evaluation}
 To compare the estimation performance between LSNMF, NMF and {\sppan}
-methods, we separate the sub-sampled CTR dataset described in Section
-\ref{sec:data_desc} into a $95\%$ training set and a $5\%$ testing set
-through random selecting. The experiment is very straightforward. For
-each method, we use the $95\%$ training set for model training, and
-test the model on estimating the entry values in the $5\%$ testing
-set.
+methods, we  randomly  partition the sub-sampled CTR dataset into a $95\%$  as training set for model training,  and a $5\%$ as testing set to evaluate the modesl for the entry values. 
+
+
+\subsubsection{Impact of Factorization Matrix Rank Number}
+\textcolor{red}{please revise figure 7, make the font larger, both in the legend and the y-axis}
 
 \begin{figure}[!ht]
   \centering
@@ -107,65 +114,33 @@ set.
   \label{fig:lsnmf_learning}
 \end{figure}
 
-For the Nonnegative Matrix Factorization based method LSNMF and NMF,
-the Factorization Matrix Rank need to be specified before training the
+For the nonnegative matrix factorization based method LSNMF and NMF,
+the ``factorization matrix rank number"\cite{??} need to be specified before training the
 model. Using a higher rank number often means a more complicated
-matrix model, which is more powerful to represent a dataset but with
-higher risk of over-fitting. On the other hand, using a lower rank
-number means a simpler matrix model, which is less possible to be
-over-fitted but might be too simple to represent the data set. We have
-tried rank number from 1 to 12 for both LSNMF and NMF methods, their
-results are very similar. The result training error and testing error
-versus rank parameter of LSNMF method is shown in Figure
-\ref{fig:lsnmf_learning}.
+matrix model, and more powerful to represent a dataset, but higher risk of over-fitting. On the other hand, using a lower rank
+number means a simpler matrix model,  less possible to be
+over-fitted but might be too simple to represent the data set. 
+
+\textcolor{red}{TODO:  change all the names of RMSD to RMSE to be consistant with the problem definition}
+To understand the impact of rank number in our model, we try to increase the ranking number from 1 to 12 for  both LSNMF and NMF methods.
+The x-axis is the ranking number, increasing from 1 to 12, while the y-axis show the ratio of RMSE value for them with baseline models. Intuitively, the smaller the RMSE ratio, the better the model is.  As we can see from the results in Figure \ref{fig:lsnmf_learning},  both of them have a ratio larger than 1, which means both of them are worse then the baseline model, indeed they are all overfitting. 
+
 
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=0.45\textwidth]{figures/methos_comparison_all_relative.eps}
-  \caption{Compare Relative RMSD Between Different Methods}
+  \caption{Compare Relative RMSE Between Different Methods}
   \label{fig:rmsd_compare}
 \end{figure}
 
-For a fair comparison with proposed {\sppan} model, we selected the rank
-numbers with the best test errors for both LSNMF and NMF. The best
-rank numbers for LSNMF and NMF are 3 and 7 respectively.
+To compare with our proposed {\sppan} model, we select the best rank
+numbers with smallest errors for both LSNMF and NMF, which is 3 and 7 respectively.
+\textcolor{red}{In figure 7, it seems that the lowest data points are 7, and 10, can u explain?}
 
-\begin{table}[!ht]
-\centering
-\begin{tabular}{|c|c|c|}
-  \hline	\hline
-  Method &  TrainRmsdRatio&TestRmsdRatio\\ \hline
-  Baseline  & $1$  & $1$\\ 
-  LSNMF & $1.15$  & $1.17$\\ 
-  NMF  & $1.16$  & $1.17$ \\ 
-  {\sppan}  & $0.42$  & $0.71$\\ \hline
-\end{tabular}
-\caption{Relative RMSD in the Best Test Error Round}
-\label{tab:rmsd_compare}
-\end{table}
 
-Here we list the result relative Root-mean-square deviation(RMSD) of
-both training set and testing set from Baseline, LSNMF, NMF and
-{\sppan} in Table \ref{tab:rmsd_compare} and Figure
-\ref{fig:rmsd_compare} to compare the estimation performance among
-these three methods.  The root-mean-square deviation (RMSD) is a
-measure of the differences between the estimated value using a model
-and the true observed value. It can be expressed using Equation
-\ref{eq:rmsd_def}, where $n$ is the number of entries that need be to
-estimated, and $\hat{\beta_i}$ and $\beta_i$ are the estimated value
-and observed value of entry $i$ respectively. The RMSD represents the
-sample standard deviation of the differences between estimated values
-and observed values \cite{hyndman2006another}.
+\subsubsection{Effectiveness}
 
-\begin{equation}
-\label{eq:rmsd_def}
-RMSD=\sqrt{\frac{\sum\limits_{i=1}^{n}(\hat{\beta_i}-\beta_i)^2}{n}}
-\end{equation}
-
-In order to make those results more meaningful, we use the relative
-criteria TrainRmsdRatio and TestRmsdRatio, that are the Train/Test
-RMSD of current methods divided by the corresponding RMSD of the
-baseline method:
+As discussed in Section \ref{sec:problem}, RMSE is used to evaluate the model effectiveness. Furthermore, to have a quatitive comparision between different modelsl, we use TrainRmsdRatio and TestRmsdRatio to measure the ratio of training/test RMSD with the baseline training/testing RMSD, as defined: 
 \[
 TrainRmsdRatio=\frac{\textit{Train RMSD}}{Baseline Train RMSD}
 \]
@@ -173,16 +148,46 @@ TrainRmsdRatio=\frac{\textit{Train RMSD}}{Baseline Train RMSD}
 TestRmsdRatio=\frac{\textit{Test RMSD}}{Baseline Test RMSD}
 \]
 
-As can be seen from Figure \ref{fig:rmsd_compare}, even though we
-chose the best rank numbers for the Nonnegative Matrix Factorization
+
+
+\begin{comment}
+The root-mean-square deviation (RMSD) is a
+measure of the differences between the estimated value using a model
+and the true observed value. It can be expressed using Equation
+\ref{eq:rmsd_def}, where $n$ is the number of entries that need be to
+estimated, and $\hat{\beta_i}$ and $\beta_i$ are the estimated value
+and observed value of entry $i$ respectively. The RMSD represents the
+sample standard deviation of the differences between estimated values
+and observed values \cite{hyndman2006another}.
+\begin{equation}
+\label{eq:rmsd_def}
+RMSD=\sqrt{\frac{\sum\limits_{i=1}^{n}(\hat{\beta_i}-\beta_i)^2}{n}}
+\end{equation}
+
+
+\end{comment}
+
+
+Figure \ref{fig:rmsd_compare} shows the TrainRmsdRatio and TestRmsdRatio comparison of baseline, LSNMF, NMF and
+{\sppan} model. Even though we
+chose the best rank numbers for the nonnegative matrix factorization
 based methods, they perform even worse than the baseline method in
-this extreme sparse case. {\sppan} model, on the other hand, outperforms
-the Baseline, LSNMF and NMF on both training and testing RMSD. To be
-more specific, the training and testing RMSD of {\sppan} are only around
-$40\%$ and $70\%$ of the training and testing RMSD of Baseline
-methods, respectively; they are aroung $35\%$ and $60\%$ of the
-training and testing RMSD of the Matrix Factorization based methods
-LSNMF and NMF; which shows a great improvement.
+this extreme sparse case. {\sppan} model, on the other hand, signigicantly outperforms
+the Baseline, LSNMF and NMF on both training and testing RMSD.
+
+
+
+\textcolor{red}{TODO: I add a column to the table to indicate the improvement \%, please make sure the numbers are correct for the new column. 
+the reason to add that column is as follows: 1) emphasize the improvement 2) add valuable informaiton, otherwise table and figure are shown the same type of information, without the improvement column}
+
+To be more specific, as shown in Table \ref{tab:rmsd_compare} , the training and testing RMSD of {\sppan} are only around
+$40\%$ and $70\%$ of the training and testing RMSD of baseline
+methods, respectively. The third and fifth column are the improvement gained
+by {\sppan} in training and testing RMSD ratio, they are aroung $35\%$ and $60\%$ improvement of the
+training and testing RMSD of the matrix factorization based methods
+LSNMF and NMF.  It clearly indicates on average, {\sppan} improves the
+recommendation efficiency.
+
 
 \begin{figure}[!ht]
   \centering
@@ -191,8 +196,24 @@ LSNMF and NMF; which shows a great improvement.
   \label{fig:est_err}
 \end{figure}
 
-We also draw the histogram of estimated error generated using {\sppan}
-and LSNMF on the testing set as in Figure \ref{fig:est_err}. The
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+  \hline	\hline
+  Method &  TrainRmsdRatio& Improve\%&TestRmsdRatio & Improve\%\\ \hline
+  Baseline  & $1$ &$0\%$ & $1$ & $0\%$\\ 
+  LSNMF & $1.15$ & $0\%$ & $1.17$ & $-20\%$\\ 
+  NMF  & $1.16$   &$0\%$ & $1.17$  & $-30\%$\\ 
+  {\sppan}  & $0.42$  &$0\%$  & $0.71$ & $30\%$\\ \hline
+\end{tabular}
+\caption{Relative RMSD in the Best Test Error Round}
+\label{tab:rmsd_compare}
+\end{table}
+
+\subsubsection{Error Rate}
+
+Figure \ref{fig:est_err} shows the histogram of estimated error generated using {\sppan}
+and LSNMF on the testing set. The
 estimated error is defined in Equation \ref{eq:err_def}. For data
 privacy considerations, we multiply an constant $k$ in Equation
 \ref{eq:err_def}, which doesn't not affect the interpretation of the
@@ -220,11 +241,13 @@ model is more accurate and reasonable.
   \label{fig:sppan_curve_whole}
 \end{figure}
 
+\subsubsection{Scalability}
+
 Besides the experiments on $10\%$ sub sampled data set, it is worth
 mentioning that the proposed {\sppan} model can also handle the whole
 CTR data set on a single computer. Similar to the model evaluation
 experiment on the sub-sampled data set, we separate the whole CTR data
-set described in Section \ref{sec:data_desc} into a $95\%$ training
+set  into a $95\%$ training
 set and a $5\%$ testing set through random selection. Then, we use the
 $95\%$ training set to train the {\sppan} model, and test the model on
 the $5\%$ testing set. The output training RMSD ratio and testing RMSD
@@ -232,8 +255,8 @@ ratio are $0.59$ and $0.62$ respectively, which shows a great
 improvement from the baseline method.
 
 We also show the learning curves of {\sppan} model in Figure
-\ref{fig:sppan_curve_whole}. It can be seen that both the training
-error and testing error were decreasing are decreasing during each
+\ref{fig:sppan_curve_whole}. As we can see,  both the training
+error and testing error were decreasing  during each
 training iterations until the training stop criterion was met, which
 is a strong indicator that the {\sppan} model is not over-fitted on the
 whole CTR data set.
