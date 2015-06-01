@@ -1,18 +1,26 @@
 \begin{abstract}
-Sparse data with large scale is one of the most difficulty for most
-recommendation systems to make effective recommendation, prediction
-and modeling in many scenarios. To achieve better performance and
-accuracy of the recommendation system, a better model with
-distribution training and serving system is the key.  In this article,
-we address the problem of data sparsity and scalability in an online
-recommendation system, which can improve the recommendation quality on
-a very sparse click-through rate data set. To demonstrate this
-improvement, we develop an innovative Similarity Powered Pairwise
-Amplifier Network({\sppan}) model, which utilized the pairwise ratio
-similarity information embedded in the data set. The proposed
-framework is evaluated on a large set of real-world data set in Google
-adsSense. The experiment results demonstrate that the proposed
-{\sppan} model can greatly improve the prediction and recommendation
-accuracy on that extreme sparse data set compared with existing
-approaches.
+
+Online adversiting, one typical application of recommendation system,
+calls for effective and accurate recommendation for keywords.  Extreme
+sparse and large scale data makes online adversiting a challenge
+problem. To achieve better performance and accuracy of the
+recommendation, a better model with short turnaround time, and able to
+handle extremely sparse and large scale data is the key.
+
+In this paper, we address the problem of personlized online
+adversiting for extreme sparse and large scale data. We develop a
+novel machine learning model (Similarity powered Pairwise Amplifier
+Network, {\sppan} for short). The complexity of the model (a.k.a. the
+number of parameters) grows with respect to observed data makes it
+resilient to extremely sparse data.  The training algorithm based on
+gradient descent makes it is easy to parallelize. The similarity model
+combines the user neighborhood and item neighborhood ideas in
+collaborative filtering smartly, make it handle large scale data in an
+cost-effective way.
+
+The proposed framework is evaluated on a large set of real-world data
+set in Google AdSense. The experiment results demonstrate that the
+proposed {\sppan} model can greatly improve the prediction and
+recommendation accuracy on that extreme sparse data set compared with
+existing approaches.
 \end{abstract}
