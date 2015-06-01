@@ -1,36 +1,47 @@
-\section{Problem Formulation}
+\subsection{Problem Formulation}
 \label{sec:problem}
 
-The input traffic estimation data can be viewed as a matrix, as shown
-in Figure~\ref{fig:problem-as-matrix}. Each row represents an
-advertisement and each column represents a keyword. If a keyword $i$
-is already associated with advertisement $u$, then we have some
-observed traffic value $\beta_{ui}$. Otherwise, no value is observed
-(noted as $X$).
-
-\textcolor{red}{ ADD THE MEASUREMENT METRIX HERE: precision?  Given
-  the input traffic estimation matrix $M$, the goal for our model is
-  to predict the value of unobserved items $X$. We measure the overall
-  precision of prediction using the formula (???)  Our goal is to
-  maximiz the prediction accuracy in Eq ()?  }
-
-\textcolor{red}{ change the matrix figure as follows: make the X as
-  red highlighted}
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=0.35\textwidth]{figures/matrix.pdf}
   \caption{Matrix ??}
   \label{fig:problem-as-matrix}
 \end{figure}
+We take same settings as other Colleborative Filtering algorithms,
+where the input keyword traffic data can be viewed as a matrix, as
+shown in Figure~\ref{fig:problem-as-matrix}. Each row represents an
+advertisement and each column represents a keyword. If a keyword $i$
+is already associated with advertisement $u$, then we have some
+observed traffic value $\beta_{ui}$. Otherwise, no value is observed
+(noted as $X$). For convenience, we define the notations we will use
+through out this paper in Table~\ref{tab:notations}. Specially $u$ and
+$v$ will be used for advertisers, while $i$ and $j$ will be used for
+keywords.
 
-We approach this problem by mining the homogeneous similartiy across
-advertisement and keyword dimentions, in another word, similarity
-ratio of different keywords between similar advertisement should be
-close to each other.  Instead of using only item-based or user-based
-method, it is a synthetic multi-dimension model, which evaluates the
-similarity cross item and user dimensions. Also, different from
-item-based or user-based method, which uses a predefine static
-similarity function and calculate the global optimal similarity, we
-are using a local optimal function, which can dynamic involving
-similarity using learned parameters, hence can support large scale
-data in an efficient computation cost.
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|l|l|}
+    \hline
+    Notation & Description \\ \hline
+    $N_a$ & total number of advertisements \\ \hline
+    $N_k$ & total number of keywords \\ \hline
+    $u$ & the $u$th advertisement, $u\in [1,N_a]$\\ \hline
+    $i$ & the $i$th keywords, $i\in [1,N_k]$\\ \hline
+    $\Lambda$ & missing values in data matrix $M$\\ \hline
+    $\Lambda_{(*,i)}$  & missing values in the $i$th column of matrix $M$\\ \hline
+    $\Lambda_{(u,*)}$ & missing values in the $u$th row of matrix $M$\\ \hline
+    $\Gamma$ & observed (known) values in the matrix $M$\\ \hline
+    $\Gamma_{(*,i)}$ & observed values in the $i$th column of matrix $M$\\ \hline
+    $\Gamma_{(u,*)}$& observed values in the $u$th row of matrix $M$\\     \hline
+    $\beta_{ui}$& observed value for cell ($u$,$i$) of matrix $M$\\ \hline
+    $\hat{\beta}_{ui}$& model estimated value for cell ($u$,$i$) of matrix $M$\\ \hline
+  \end{tabular}
+  \caption{Notations for {\sppan} Model}
+\label{tab:notations}
+\end{table}
+
+The quality of the model is evaluated by the standard root mean square
+error (RMSE), which is
+\[
+\sqrt{\frac{1}{N_a * N_k}\sum_u \sum_i \left(\beta_{ui}-\hat{\beta}_{ui}\right)^2}
+\]
