@@ -1,30 +1,30 @@
 \section{Conclusions}
 \label{sec:conclusion}
-In summary, the Similarity Powered Pairwise Amplifier Network (SPPAN)
-model we proposed in this article shows promising results in
-predicting click-through rate (CTR) in a very sparse CTR data set. It
-utilizes the pairwise ratio similarity information that embedded in
-the data set, and its model complexity is automatically adjusted
-according to the sparsity of the data set. Comparing with several
-matrix factorization based recommendation methods, our evaluation
-experiment results show that this model can substantially improving
-the performance of the recommendation system in extreme sparse
-situations. It has also been shown that the training process of the
-SPPAN model can be easily implemented in a paralleled version through
-map-reduce, which makes the model can handle even bigger data set
-efficiently.
+In summary, the Similarity Powered Pairwise Amplifier Network
+({\sppan}) model we proposed in this article shows promising results
+in predicting click-through rate (CTR) in a very sparse CTR data
+set. It utilizes the pairwise ratio similarity information that
+embedded in the data set, and its model complexity is automatically
+adjusted according to the sparsity of the data set. Comparing with
+several matrix factorization based recommendation methods, our
+evaluation experiment results show that this model can substantially
+improving the performance of the recommendation system in extreme
+sparse situations. It has also been shown that the training process of
+the {\sppan} model can be easily implemented in a paralleled version
+through map-reduce, which makes the model can handle even bigger data
+set efficiently.
 
 Since all evaluation experiments in this paper were performed on a
 click-through rate data set, we must observe that more experimental
-evaluations of the proposed SPPAN model should be performed in the
+evaluations of the proposed {\sppan} model should be performed in the
 future in order to make a more comprehensive conclusion of the
-performance of the model. In fact, out next plan is to apply the SPPAN
-model on other sparse data sets from different domains so that we
-could confirm if the {\it Homogeneous Amplifying Effect} described in
-Section \ref{sec:model_intuition} is valid only in online
+performance of the model. In fact, out next plan is to apply the
+{\sppan} model on other sparse data sets from different domains so
+that we could confirm if the {\it Homogeneous Amplifying Effect}
+described in Section \ref{sec:model_intuition} is valid only in online
 advertisement traffic data or can be generalized in other
 areas. Moreover, the experiment result in the present paper only shows
-the advantages of the SPPAN model in a situation with a certain
+the advantages of the {\sppan} model in a situation with a certain
 sparsity level. A sensitivity analysis about the effect of the
 sparsity on the model's performance would help us to decide when to
-use SPPAN model instead of other approaches.
+use {\sppan} model instead of other approaches.
